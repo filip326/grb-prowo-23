@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/img/logo.png">
+    <title>GRB - Dashboard</title>
+    <link rel="stylesheet" href="/dashboard.css">
+    <script src="/dashboard.js" defer></script>
+    <link rel="stylesheet" href="/wahltool.css">
+</head>
+
+<body>
+    <header>
+        <img src="/img/logo.png" alt="Gymnasium Riedberg Logo">
+        <h1>GRB - Wahltool</h1>
+        <a href="/logout"><img src="/img/logout.svg" alt="Logout Icon"> Log Out</a>
+    </header>
+    <main>
+        <h2>
+            <%= voting.name %>
+        </h2>
+        <div class="choices-list">
+            <%- choices %>
+        </div>
+        <div class="button-wrapper">
+            <button class="next-button" href="/wahltool/confirmation-page/<%= voting.id %>">Weiter</button>
+        </div>
+    </main>
+</body>
+
+</html>
