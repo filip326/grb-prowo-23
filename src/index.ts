@@ -10,8 +10,12 @@ import { MongoClient, Db } from 'mongodb';
 import session from 'express-session';
 
 import login from './login';
+import LogManager from './logger/logger';
 
 async function main() {
+    const logManager: LogManager = LogManager.getInstance();
+    const dblogger = logManager.logger('Init-MongoDB');
+
     if (!process.env.DB) {
         throw (new Error("DB URL is missing"));
     }
@@ -23,22 +27,30 @@ async function main() {
     }
 
 
-    console.log('waiting on connection');
+    dblogger.log('INFO', 'waiting on connection');
 
     let db: Db | null;
     try {
         console.log(process.env.DB)
         const dbClient = await MongoClient.connect(process.env.DB);
+        dblogger.log('INFO', 'connected, opening Database');
         console.log('connected, opening Database');
         db = dbClient.db('ProWo')
     } catch (e) {
+        dblogger.log('ERROR', 'waiting on connection');
         console.error('could not connect to dabase');
         throw new Error(JSON.stringify(e));
     }
 
+    dblogger.log('INFO', 'connected to db');
     console.log('connected to db');
 
-    app.use(session())
+    app.use(session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: false }
+    }));
 
     app.use(express.urlencoded({ extended: false, }))
     app.use(express.json());
@@ -48,8 +60,11 @@ async function main() {
     app.use(express.static('./public'));
 
 
-    app.use(login(db))
-    app.listen(process.env.PORT);
+    app.use(login(db));
+    app.listen(process.env.PORT, () => {
+        logManager.logger('Express-Server').logSync('INFO', `Server listens on Port localhost:${process.env.PORT}`);
+        console.log(`Server listens on Port localhost:${process.env.PORT}`);
+    });
 }
 
 main();
