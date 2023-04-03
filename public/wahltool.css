@@ -1,0 +1,98 @@
+.voting,
+.choice {
+    background-color: black;
+    min-height: 100px;
+    margin: 10px;
+    width: fit-content;
+    min-width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.voting .title
+.choice .title {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+}
+
+.voting .description,
+.choice .description {
+    margin: 10px 0;
+    display: block;
+}
+
+.voting button {
+    background-color: rgb(39, 39, 39);
+    color: white;
+}
+
+.voting button,
+.choice .buttons {
+    border: none;
+    padding: 5px 0;
+    border-radius: 5px;
+    margin: 0;
+    margin-top: auto;
+    display: flex;
+    gap: 20px;
+}
+
+.choice button,
+.next-button {
+    padding: 10px 20px;
+    border: none;
+    margin: 0;
+    border-radius: 7px;
+    background-color: rgb(0, 76, 255);
+    color: white;
+}
+
+.choice button:hover,
+.next-button:hover {
+    background-color: rgb(0, 132, 255);    
+}
+
+.button-wrapper {
+    display: flex;
+    padding: 10px;
+    margin: 20px;
+}
+
+.next-button {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.post-loading {
+    animation: loadingAnimation infinite linear 500ms !important;
+}
+
+.post-succeed {
+    background-color: rgb(0, 164, 66) !important;
+}
+
+.post-failed {
+    background-color: red !important;
+}
+
+@keyframes loadingAnimation {
+    0% {
+        background-color: yellow;
+    }
+    50% {
+        background-color: orange;
+    }
+    100% {
+        background-color: yellow;
+    }
+}
+
+@media (max-width: 475px) {
+    header h1 {
+        display: none;
+    }
+}
