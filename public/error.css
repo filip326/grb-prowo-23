@@ -1,0 +1,28 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+h1 {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 64px;
+}
+
+h1 img {
+    max-height: 70px;
+}
+
+p {
+    font-size: 24px;
+}
+
+a {
+    font-size: 24px;
+    color: white;
+}
+
+a:visited {
+    color: lightblue;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRB - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="form.css">
+    <link rel="icon" type="image/png" href="/img/logo.png">
+</head>
+
+<body class="login">
+    <main>
+        <div class="loginFormWrapper">
+            <form class="loginForm" action="/login" method="post">
+                <h1><img src="img/logo.png" alt="Gymnasium Riedberg Logo"> Anmelden</h1>
+                <div class="error-message"></div>
+                <script>
+                    function getUrlParams(url) {
+                        const searchParams = new URLSearchParams(new URL(url).search);
+                        const params = {};
+                        for (const [key, value] of searchParams.entries()) {
+                            params[key] = value;
+                        }
+                        return params;
+                    }
+
+                    if (getUrlParams(window.location)['error_msg']) {
+                        document.querySelector('.error-message').innerText = getUrlParams(window.location)['error_msg']
+                    }
+                </script>
+                <div class="input-box">
+                    <input type="text" name="username" id="username" placeholder=" ">
+                    <label for="username">Benutzername</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" id="password" placeholder=" ">
+                    <label for="password">Passwort</label>
+                </div>
+                <button type="submit">Anmelden</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

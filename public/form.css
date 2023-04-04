@@ -1,0 +1,145 @@
+
+.input-box {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    cursor: text;
+    background-color: rgb(34, 34, 34);
+    margin: 10px 0;
+}
+
+.input-box :is(input, textarea) {
+    border: 3px solid transparent;
+    margin: 0;
+    padding: 3px;
+    border-bottom: 2px solid white;
+    min-height: 30px;
+    font-size: 20px;
+    background-color: rgb(34, 34, 34);
+    color: white;
+}
+
+.input-box textarea {
+    padding: 5px;
+    font-size: 18px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.input-box :is(input, textarea):focus {
+    outline: none;
+}
+
+.input-box :is(input, textarea):is(:focus, :not(:placeholder-shown))~label {
+    transform: translate(5px, -10px);
+    font-size: 15px;
+    padding: 1px;
+    background-color: rgb(34, 34, 34);
+    cursor: auto;
+}
+
+.inline {
+    display: flex;
+    width: fit-content;
+    align-self: center;
+    gap: 5px;
+}
+
+
+
+.input-box :is(input, textarea):focus {
+    border-radius: 5px;
+    border: 3px solid white !important;
+}
+
+.input-box :is(input, textarea):focus~label {
+    color: white;
+}
+
+.input-box :is(input, textarea):not(:placeholder-shown) {
+    border-radius: 5px;
+    border: 3px solid white;
+}
+
+.input-box :is(input, textarea):not(:placeholder-shown):invalid {
+    border-radius: 5px;
+    border: 3px solid red;
+}
+
+.input-box label {
+    position: absolute;
+    font-size: 20px;
+    transform: translateY(3px);
+    transition: 200ms all;
+    cursor: text;
+    user-select: none;
+}
+
+.input-box.center {
+    align-self: center;
+}
+
+
+.comment {
+    font-size: 15px;
+    margin: 10px auto;
+}
+
+.input-box.otp {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    justify-content: center;
+}
+
+.input-box.otp input {
+    max-width: 20px;
+    text-align: center;
+    width: fit-content;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.input-box.otp input::-webkit-outer-spin-button,
+.input-box.otp input::-webkit-inner-spin-button {
+
+    display: none;
+}
+
+
+.check-box {
+    border: none;
+    margin: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+    user-select: none;
+}
+
+.check-box input {
+    opacity: 0;
+    position: absolute;
+}
+
+.check-box input:focus~.box {
+    outline: 2px solid white;
+}
+
+.check-box .box {
+    content: '';
+    display: block;
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: 2px;
+    background-image: url('img/unchecked.svg');
+}
+
+
+.check-box input:checked~.box {
+    background-image: url('img/tick.svg');
+}
