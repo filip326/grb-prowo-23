@@ -47,18 +47,18 @@ export default function (db: Db): Router {
         let user = await Users.findOne({ $or: [{ username: username }, { fullName: username }] }) as IUser | null;
 
         if (user == null) {
-            return done("Nutzername konnte nicht zugeordnet werden.", false);
+            return done(null, false);
         }
 
         if (!user.password) {
-            return done({ messages: "Kein Passwort in DB" }, false)
+            return done(null, false)
         }
 
         if (await compare(password, user.password)) {
             return done(null, user)
         }
 
-        return done("Falsches Passwort", false)
+        return done(null, false)
     }))
 
     router.post('/login', passport.authenticate('local', {
