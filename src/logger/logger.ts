@@ -40,7 +40,7 @@ class LogManager {
     return LogManager.singleton
   }
 
-  private static readonly DEFAULT_LOGGER_NAME = 'master'
+  // private static readonly DEFAULT_LOGGER_NAME = 'master'
 
   readonly config: ILoggingConfig
 
@@ -48,16 +48,16 @@ class LogManager {
     const loggingConfig = JSON.parse(fs.readFileSync('./logging.json', 'utf8')) as ILoggingConfig
     this.config = loggingConfig
   }
-
+  
   /**
    * Returns an ILogger for the configured backend and the specified logger name
    *
-   * @param name a logger name, can be any string
+   * @param _name a logger name, can be any string
    * @returns an instance of ILogger
    */
-  logger (name?: string): ILogger {
+  logger (_name?: string): ILogger {
     // eslint-disable-next-line no-eval
-    return eval(`new ${this.config.loggerImplementation}(this.config.data, name ?? LogManager.DEFAULT_LOGGER_NAME, this.config.minLevel)`)
+    return eval(`new ${this.config.loggerImplementation}(this.config.data, _name ?? LogManager.DEFAULT_LOGGER_NAME, this.config.minLevel)`)
   }
 }
 
@@ -66,12 +66,10 @@ class LogManager {
  */
 class FileConsoleLogger implements ILogger {
   static filename?: string
-  private readonly configData: any
   private readonly loggerName: string
   private readonly minLevel: ILoggingLevel
 
   constructor (configData: any, logerName: string, minLevel: ILoggingLevel) {
-    this.configData = configData
     this.loggerName = logerName
     this.minLevel = minLevel
     const path = configData.path

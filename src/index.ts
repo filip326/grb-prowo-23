@@ -12,6 +12,7 @@ import session from 'express-session';
 import login from './login';
 import LogManager from './logger/logger';
 
+
 async function main() {
     const logManager: LogManager = LogManager.getInstance();
     const dblogger = logManager.logger('Init-MongoDB');
@@ -26,24 +27,17 @@ async function main() {
         throw (new Error("ENVIRONMENT is missing OR invalid."))
     }
 
-
-    dblogger.log('INFO', 'waiting on connection');
+    dblogger.log("DEBUG", 'waiting on connection');
 
     let db: Db | null;
     try {
-        console.log(process.env.DB)
         const dbClient = await MongoClient.connect(process.env.DB);
-        dblogger.log('INFO', 'connected, opening Database');
-        console.log('connected, opening Database');
+        dblogger.log("INFO", "Successful db connection");
         db = dbClient.db('ProWo')
     } catch (e) {
-        dblogger.log('ERROR', 'waiting on connection');
-        console.error('could not connect to dabase');
+        dblogger.log("ERROR", "Could not connect do db.");
         throw new Error(JSON.stringify(e));
     }
-
-    dblogger.log('INFO', 'connected to db');
-    console.log('connected to db');
 
     app.use(session({
         secret: 'keyboard cat',
