@@ -57,7 +57,6 @@ async function main() {
     app.use(login(db));
     app.listen(process.env.PORT, () => {
         logManager.logger('Express-Server').logSync('INFO', `Server listens on Port localhost:${process.env.PORT}`);
-        console.log(`Server listens on Port localhost:${process.env.PORT}`);
     });
 }
 
