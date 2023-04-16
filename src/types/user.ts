@@ -4,7 +4,7 @@ interface AuthenticatedRequest extends Request {
     user?: User;
 }
 
-type AccountType = "student" | "teacher" | "admin";
+type AccountType = "student" | "teacher";
 
 interface User {
     /**
@@ -26,6 +26,10 @@ interface User {
      */
     password: string;
 
+    /**
+     * Whether the user is an admin
+     */
+    admin: boolean;
 }
 
 interface Student extends User {
@@ -38,26 +42,29 @@ interface Student extends User {
     /**
      * The id of the project the User got assigned to
      */
-    assignedProject?: string;
+    assignedProject?: number;
 
     /**
     * A list of project Ids in order they were wished by the student
     */
-    wishes?: string[];
+    wishes?: number[];
 
 }
 
 interface Teacher extends User {
-    type: "teacher" | "admin";
+    type: "teacher";
 
-    managedProject: string;
+    managedProject: number;
 
-    managedClass: string;
+    managedClass: number;
 
 }
 
-interface Admin extends Teacher {
-    isAdmin: true;
-}
+function isStudent( user: User): user is Student {
+    return user.type === "student";
+};
+function isTeacher( user: User): user is Teacher {
+    return user.type === "teacher";
+};
 
-export { User, Admin, Teacher, Student, AuthenticatedRequest };
+export { User, Teacher, Student, AuthenticatedRequest, isStudent, isTeacher };
