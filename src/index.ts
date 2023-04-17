@@ -11,6 +11,7 @@ import session from 'express-session';
 
 import login from './login';
 import LogManager from './logger/logger';
+import wahltool from './wahltool';
 
 
 async function main() {
@@ -55,6 +56,7 @@ async function main() {
 
 
     app.use(login(db));
+    app.use(wahltool(db));
 
     app.get('/home', (req, res) => {
         if (!req.isAuthenticated()) {

@@ -1,11 +1,11 @@
-import express from "express";
+import { Router} from "express";
 import { Db } from "mongodb";
 
 import { Project } from "./types/project";
 import { isStudent, isTeacher } from "./types/user";
 
-export default (db: Db): express.Router => {
-    const router: express.Router = express();
+export default (db: Db): Router => {
+    const router: Router = Router();
     const Projekte = db.collection<Project>('projekte')
 
     router.get('/projects/avaible', async (req, res) => {
