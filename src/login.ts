@@ -8,7 +8,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 
 import { compare, hash } from 'bcrypt';
 
-import { User as IUser } from './types/user';
+import { Teacher, Student, User as IUser } from './types/user';
 
 declare global {
     namespace Express {
@@ -20,15 +20,16 @@ export default function (db: Db): Router {
 
     const router: Router = Router();
 
-    const Users = db.collection('users');
+    const Users = db.collection<Teacher | Student | IUser>('users');
 
     passport.serializeUser((user, done) => {
         done(null, user.id)
     })
 
-    passport.deserializeUser(async (id: string, done) => {
+    passport.deserializeUser(async (id: number, done) => {
         try {
-            const user = await Users.findOne({ id: { $eq: id } }) as IUser | null;
+            const user = await Users.findOne({ id: { $eq: id } });
+
             if (user === null) {
                 done("User not found", null);
                 return;

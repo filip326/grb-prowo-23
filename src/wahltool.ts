@@ -1,45 +1,34 @@
 import express from "express";
 import { Db } from "mongodb";
 
+import { Project } from "./types/project";
+import { isStudent } from "./types/user";
+
 export default (db: Db): express.Router => {
     const router: express.Router = express();
-    const Wahltool = db.collection('wahltool')
+    const Projekte = db.collection<Project>('projekte')
 
-    router.get('/wahltool/vote/:id', async (req, res) => {
+    router.get('/projects/avaible', async (req, res) => {
+
+        // check if user is authenticated
         if (!req.isAuthenticated()) {
-            res.redirect('/login.html')
-            return;
+            return res.status(401).redirect('/login');
         }
 
-        const voting = await Wahltool.findOne({ id: parseInt(req.params.id) })
-        if (!voting || !voting.choices || !voting.title) {
-            return res.status(500).render('error', {
-                error: {
-                    code: 500,
-                    title: "Server Error",
-                    description: "Serverseitiger Datenbankfehler"
-                },
-                redirect: {
-                    link: "/wahltool/start",
-                    name: "Wahltool Startseite"
-                }
-            })
+        // check if user is student
+        if (!isStudent(req.user)) {
+            return res.status(403).send({ message: "Only students can access this route." });
         }
 
-        return res.render('wahltool/wish-vote.ejs', {
-            voting: {
-                name: voting.title,
-                id: voting.id
-            },
-            choices: voting.choices.map((value: any) => {
-                return `<div class="choice">
-                    <div class="title">${value.title}</div>
-                    <div class="description">${value.description}</div>
-                    <button>Bearbeiten</button>
-                </div>`
-            }).join('\n') || "- keine Optionen eingetragen -"
+        req.user
+
+        // warp projects, where minimum grade <= user's grade and maximum grade >= user's grade
+        const projects = await Projekte.find({
+            minimumGrade: { $lt: req.user.grade },
+            maximumGrade: { $gt: req.user.grade }
         })
-    });
 
-    return router;
+});
+
+return router;
 };
