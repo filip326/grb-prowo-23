@@ -26,6 +26,16 @@ interface User {
      */
     password: string;
 
+    /**
+     * Full name
+     */
+    fullName: string;
+
+    /**
+     * Determines if a password change is required on next login
+     */
+    changePasswordRequired: boolean;
+
 }
 
 interface Student extends User {

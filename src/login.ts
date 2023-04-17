@@ -20,7 +20,7 @@ export default function (db: Db): Router {
 
     const router: Router = Router();
 
-    const Users = db.collection('user');
+    const Users = db.collection('users');
 
     passport.serializeUser((user, done) => {
         done(null, user.id)
@@ -44,8 +44,9 @@ export default function (db: Db): Router {
     router.use(passport.session())
 
     passport.use(new LocalStrategy(async (username, password, done) => {
-        let user = await Users.findOne({ $or: [{ username: username }, { fullName: username }] }) as IUser | null;
-
+        console.log(username, password);
+        let user = await Users.findOne({ username: username }) as IUser | null;
+        console.log(user);
         if (user == null) {
             return done(null, false);
         }
@@ -131,7 +132,7 @@ export default function (db: Db): Router {
             return;
         }
 
-        const user = await Users.findOne({ $or: [{ username: req.body.username }, { fullName: req.body.username }] }) as IUser | null;
+        const user = await Users.findOne({ username: req.body.username }) as IUser | null;
 
         if (user == null) {
             res.status(500).render('error', {
@@ -165,7 +166,7 @@ export default function (db: Db): Router {
 
             if ((await Users.updateOne(
                 { username: req.body.username },
-                { $set: { password: await hash(req.body.newPassword, 20), passwordChangeRequired: false } })).acknowledged) {
+                { $set: { password: await hash(req.body.newPassword, 20), changePasswordRequired: false } })).acknowledged) {
                 res.status(200).render('error', {
                     error: {
                         code: 200,
