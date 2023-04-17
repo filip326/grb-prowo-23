@@ -2,7 +2,7 @@ import express from "express";
 import { Db } from "mongodb";
 
 import { Project } from "./types/project";
-import { isStudent } from "./types/user";
+import { isStudent, isTeacher } from "./types/user";
 
 export default (db: Db): express.Router => {
     const router: express.Router = express();
