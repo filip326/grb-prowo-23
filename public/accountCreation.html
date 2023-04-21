@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="accountCreation.css">
+    <link rel="stylesheet" href="table.css">
+    <script src="lib/xlsx.mini.min.js"></script>
+    <script src="accountCreation.js" defer></script>
+</head>
+<body>
+    <h1>Accounts erstellen</h1>
+    <main>
+        <h2>Dateien hochladen</h2>
+        <p>Laden Sie bitte eine Datei mit einer Liste der Accounts hoch. Folgendes ist zu beachten:</p>
+        <ul>
+            <li>Vorname und Nachname <u>müssen</u> in einer getrennten Spalte sein</li>
+            <li>Alle Accounts müssen in aufeinander folgenden Zeilen auf einer Seite sein</li>
+            <li>Falls Sie eine .csv Datei hochladen, achten Sie darauf, dass ein <u>Semikolon als Trennzeichen</u> verwendet wird</li>
+            <li>Falls Sie eine Excel-Mappe hochladen, wird <u>nur die erste Seite</u> angwandt.</li>
+        </ul>
+        <div class="file" id="fileDragNDrop"></div>
+        <button id="proceedWithData">
+            Mit diesen Daten fortfahren
+        </button>
+    </main>
+</body>
+</html>

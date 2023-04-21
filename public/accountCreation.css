@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.file {
+    border: 3px solid black;
+    outline-offset: -10px;
+    outline: 5px dotted black;
+    margin: 10px;
+    width: 75%;
+    min-height: 200px;
+    min-width: 200px;
+    box-shadow: 0px 0px 40px 40px rgba(0, 0, 0, 0.2) inset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    transition: 80ms;
+    padding: 10px;
+}
+
+div.file.dragover {
+    outline-offset: -15px;
+}
+
+#proceedWithData {
+    padding: 10px 40px;
+    border: 3px solid black;
+    background-color: rgb(90, 211, 255);
+    border-radius: 10px;
+    margin: 10px;
+}
