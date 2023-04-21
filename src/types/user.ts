@@ -4,7 +4,7 @@ interface AuthenticatedRequest extends Request {
     user?: User;
 }
 
-type AccountType = "student" | "teacher" | "admin";
+type AccountType = "student" | "teacher";
 
 interface User {
     /**
@@ -69,19 +69,11 @@ interface Teacher extends User {
 
 }
 
-interface Admin extends User {
-    type: "admin";
-
-}
-
 function isStudent( user: User): user is Student {
     return user.type === "student";
 };
 function isTeacher( user: User): user is Teacher {
     return user.type === "teacher";
 };
-function isAdmin( user: User): user is Admin {
-    return user.type === "admin";
-};
 
-export { User, Admin, Teacher, Student, AuthenticatedRequest, isStudent, isTeacher, isAdmin };
+export { User, Teacher, Student, AuthenticatedRequest, isStudent, isTeacher };
