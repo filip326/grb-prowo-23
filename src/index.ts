@@ -5,7 +5,7 @@ import express from 'express';
 
 const app = express();
 
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient,  Db } from 'mongodb';
 
 import session from 'express-session';
 
@@ -32,7 +32,7 @@ async function main() {
 
     let db: Db | null;
     try {
-        const dbClient = await MongoClient.connect(process.env.DB);
+        const dbClient = await MongoClient.connect(process.env.DB, {});
         dblogger.log("INFO", "Successful db connection");
         db = dbClient.db('ProWo')
     } catch (e) {
@@ -52,7 +52,6 @@ async function main() {
     app.set('view engine', 'ejs');
     app.set('views', './views');
     app.set('view cache', false);
-    app.use(express.static('./public'));
 
 
     app.use(login(db));
@@ -64,6 +63,8 @@ async function main() {
         }
         
     })
+
+    app.use(express.static('./public'));
 
     app.listen(process.env.PORT, () => {
         logManager.logger('Express-Server').logSync('INFO', `Server listens on Port localhost:${process.env.PORT}`);
