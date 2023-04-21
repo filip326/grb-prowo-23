@@ -5,7 +5,7 @@ import express from 'express';
 
 const app = express();
 
-import { MongoClient,  Db } from 'mongodb';
+import { MongoClient, Db } from 'mongodb';
 
 import session from 'express-session';
 
@@ -67,7 +67,7 @@ async function main() {
     app.use(express.static('./public'));
 
     app.listen(process.env.PORT, () => {
-        logManager.logger('Express-Server').logSync('INFO', `Server listens on Port localhost:${process.env.PORT}`);
+        logManager.logger('Express-Server').logSync('INFO', `Server listens on Port 127.0.0.1:${process.env.PORT}`);
     });
 }
 
