@@ -12,6 +12,7 @@ import session from 'express-session';
 import login from './login';
 import LogManager from './logger/logger';
 import wahltool from './wahltool';
+import { AccountTypes, isAdmin } from './types/user';
 
 
 async function main() {
@@ -59,10 +60,26 @@ async function main() {
 
     app.get('/home', (req, res) => {
         if (!req.isAuthenticated()) {
-            res.redirect('/login.html')
+            return res.redirect('/login.html')
         }
-        
-    })
+
+        if (isAdmin(req.user)) {
+            return res.render('home', {
+                linklist: ``
+            });
+        }
+
+        switch (req.user.type) {
+            case AccountTypes.STUDENT:
+                return res.render('home', {
+                    linklist: ``
+                });
+            case AccountTypes.TEACHER:
+                return res.render('home', {
+                    linklist: ``
+                });
+        }
+    });
 
     app.use(express.static('./public'));
 
