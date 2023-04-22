@@ -6,6 +6,11 @@ interface AuthenticatedRequest extends Request {
 
 type AccountType = "student" | "teacher";
 
+enum AccountTypes {
+    STUDENT = "student",
+    TEACHER = "teacher"
+}
+
 interface User {
     /**
      * The id of the User
@@ -75,5 +80,8 @@ function isStudent( user: User): user is Student {
 function isTeacher( user: User): user is Teacher {
     return user.type === "teacher";
 };
+function isAdmin( user: User): boolean {
+    return user.admin;
+};
 
-export { User, Teacher, Student, AuthenticatedRequest, isStudent, isTeacher, AccountType };
+export { User, Teacher, Student, AuthenticatedRequest, isStudent, isTeacher, AccountType, AccountTypes, isAdmin };
