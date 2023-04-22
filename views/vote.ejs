@@ -17,15 +17,16 @@
         <a href="/logout"><img src="/img/logout.svg" alt="Logout Icon"> Log Out</a>
     </header>
     <main>
-        <h2>
-            <%= voting.name %>
-        </h2>
-        <div class="choices-list">
-            <%- choices %>
-        </div>
-        <div class="button-wrapper">
-            <button class="next-button" href="/wahltool/confirmation-page/<%= voting.id %>">Weiter</button>
-        </div>
+        <form action="/vote/send">
+            <h2>
+                GRB-ProWo-2023
+            </h2>
+            <div class="choices-list">
+                <%- options %>
+            </div>
+            <button type="submit">Senden</button>
+            <button type="reset">Zurücksetzten</button>
+        </form>
     </main>
 </body>
 
