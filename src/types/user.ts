@@ -68,9 +68,9 @@ interface Student extends User {
 interface Teacher extends User {
     type: "teacher";
 
-    managedProject: number;
+    managedProject?: number;
 
-    managedClass: number;
+    managedClass?: string;
 
 }
 
