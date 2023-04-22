@@ -76,4 +76,4 @@ function isTeacher( user: User): user is Teacher {
     return user.type === "teacher";
 };
 
-export { User, Teacher, Student, AuthenticatedRequest, isStudent, isTeacher };
+export { User, Teacher, Student, AuthenticatedRequest, isStudent, isTeacher, AccountType };
