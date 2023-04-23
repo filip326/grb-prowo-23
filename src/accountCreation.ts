@@ -166,9 +166,11 @@ export default function (db: Db): Router {
         pdf.on('end', () => {
             const pdfBuffer = Buffer.concat(buffers);
             const dataUri = 'data:application/pdf;base64,' + pdfBuffer.toString('base64');
-            res.set('Content-Disposition', 'inline;filename=newUsers.pdf');
-            res.set('Content-Type', 'application/pdf');
-            res.send(dataUri);
+            res.send({
+                successfullyCreatedUsers,
+                failedUsers,
+                pdf: dataUri
+            });
         });
     });
 
