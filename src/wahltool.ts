@@ -50,7 +50,7 @@ export default (db: Db): Router => {
         res.status(200).json(projects);
     });
 
-    router.get('/', async (req, res) => {
+    router.get('/voting', async (req, res) => {
         // check for authentication type=teacher or admin
         if (!req.isAuthenticated()) {
             return res.status(401).redirect('/login');

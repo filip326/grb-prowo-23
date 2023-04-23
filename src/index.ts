@@ -65,18 +65,26 @@ async function main() {
 
         if (isAdmin(req.user)) {
             return res.render('home', {
-                linklist: ``
+                linklist: `
+                // todo 
+                <a href="">Lehrkräfte hinzufügen</a>
+                `
             });
         }
 
         switch (req.user.type) {
             case AccountTypes.STUDENT:
                 return res.render('home', {
-                    linklist: ``
+                    linklist: `<a href="/voting">Jetzt wählen!</a>`
                 });
             case AccountTypes.TEACHER:
                 return res.render('home', {
-                    linklist: ``
+                    linklist: `
+                    // todo 
+                    <a href="/">Projekte eintragen/ ändern</a>
+                    // todo
+                    <a href="">Schüler hinzufügen/ bearbeiten</a>
+                    `
                 });
         }
     });
