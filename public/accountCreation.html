@@ -1,30 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="accountCreation.css">
-    <link rel="stylesheet" href="table.css">
-    <script src="lib/xlsx.mini.min.js"></script>
-    <script src="accountCreation.js" defer></script>
+    <title>Account Creation</title>
 </head>
+
 <body>
+
     <h1>Accounts erstellen</h1>
-    <main>
-        <h2>Dateien hochladen</h2>
-        <p>Laden Sie bitte eine Datei mit einer Liste der Accounts hoch. Folgendes ist zu beachten:</p>
-        <ul>
-            <li>Vorname und Nachname <u>müssen</u> in einer getrennten Spalte sein</li>
-            <li>Alle Accounts müssen in aufeinander folgenden Zeilen auf einer Seite sein</li>
-            <li>Falls Sie eine .csv Datei hochladen, achten Sie darauf, dass ein <u>Semikolon als Trennzeichen</u> verwendet wird</li>
-            <li>Falls Sie eine Excel-Mappe hochladen, wird <u>nur die erste Seite</u> angwandt.</li>
-        </ul>
-        <div class="file" id="fileDragNDrop"></div>
-        <button id="proceedWithData">
-            Mit diesen Daten fortfahren
-        </button>
-    </main>
+
+    <form>
+
+        <div>
+            <p>Erstellen Sie Lehrer oder Schüler Accounts?</p>
+            <input type="radio" name="type" id="type_teacher" value="teacher">
+            <label for="type_teacher">Leheraccounts</label>      
+            <input type="radio" name="type" id="type_student" value="student">
+            <label for="type_student">Schüleraccounts</label>   
+        </div>
+
+        <div class="users">
+
+            <ul>
+                <li>Geben Sie hier alle Namen, die Sie erstellen wollen und vom gleichen Typ sind ein.</li>
+                <li>Jeder Name kommt in eine eigene Zeile</li>
+                <li>Schreiben Sie die Namen: alle Nachnamen, alle Vornamen</li>
+            </ul>
+
+            <p>Beispiel:</p>
+            <textarea readonly rows="5">Mustermann, Max
+Schreiber Müller, Lisa
+Neuer, Manuel
+Jodelgern, Hans</textarea>
+                <br/>
+            <textarea name="userlist" id="users" cols="30" rows="10"></textarea>
+
+        </div>
+
+        <button type="submit">Erstellen</button>
+
+    </form>
 </body>
+
 </html>
