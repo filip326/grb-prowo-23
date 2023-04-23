@@ -85,7 +85,7 @@ export default function (db: Db): Router {
                     failedUsers.push(user.username);
                     continue;
                 }
-            
+
                 const teacher: Teacher = {
                     id: userId,
                     username: user.username,
@@ -108,23 +108,20 @@ export default function (db: Db): Router {
                 } else {
                     failedUsers.push(user.username);
                 }
-            
+
             }
 
             if (user.type == 'student') {
                 // check if all properties are set
-                if (!user.grade || isNaN(parseInt(user.grade)) || parseInt(user.grade) < 5 || parseInt(user.grade) > 12) {
+                const teacher = req.user as Teacher;
+                if (!teacher.managedClass || !teacher.managedGrade || isNaN(parseInt(teacher.managedClass)) || !teacher.managedGrade || teacher.managedGrade < 5 || teacher.managedGrade > 12) {
                     failedUsers.push(user.username);
                     continue;
                 }
-                if (!user.class) {
-                    failedUsers.push(user.username);
-                    continue;
-                }
-                if (!(isTeacher(req.user) && req.user.managedClass === user.class) && !req.user.admin) {
+                if (!(isTeacher(req.user)) && !req.user.admin) {
                     failedUsers.push(user.username);
                 }
-                
+
                 const student: Student = {
                     id: userId,
                     username: user.username,
@@ -132,31 +129,47 @@ export default function (db: Db): Router {
                     password: await hash(password, 12),
                     type: 'student',
                     admin: false,
-                    grade: parseInt(user.grade),
-                    class: user.class,
+                    grade: teacher.managedGrade,
+                    class: teacher.managedClass,
                     changePasswordRequired: true,
                 }
 
                 const createdStudent = await Users.insertOne(student);
-                
+
                 if (createdStudent.acknowledged == true) {
                     successfullyCreatedUsers.push({
                         username: user.username,
                         fullName: user.fullName,
                         password: password,
-                        type:'student',
+                        type: 'student',
                     });
                 }
             }
-            
+
         }
 
-        const pdf = new PDFDocument();
+        const pdf = new PDFDocument({size: 'A4'});
 
         pdf.registerFont('Ubuntu', './src/font/UbuntuMono-Regular.ttf');
+        pdf.font('Ubuntu');
 
+        let list: string[] = [];
+        list.push(`Benutzername | fullName | Passwort`);
 
+        successfullyCreatedUsers.forEach((user: CreatedUser) => {
+            list.push(`${user.username} | ${user.fullName} | ${user.password}`);
+        });
 
+        pdf.end();
+        const buffers: any[] = [];
+        pdf.on('data', buffer => buffers.push(buffer));
+        pdf.on('end', () => {
+            const pdfBuffer = Buffer.concat(buffers);
+            const dataUri = 'data:application/pdf;base64,' + pdfBuffer.toString('base64');
+            res.set('Content-Disposition', 'inline;filename=newUsers.pdf');
+            res.set('Content-Type', 'application/pdf');
+            res.send(dataUri);
+        });
     });
 
     return router;
@@ -169,7 +182,7 @@ interface CreatedUser {
     password: string;
 }
 
-function genPassword(length:number): string {
+function genPassword(length: number): string {
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:_-;/\\()';
     let result = '';
     for (let i = 0; i < length; i++) {

@@ -26,9 +26,9 @@ export default function (db: Db): Router {
         done(null, user.id)
     })
 
-    passport.deserializeUser(async (id: number, done) => {
+    passport.deserializeUser(async (id: string, done) => {
         try {
-            const user = await Users.findOne({ id: { $eq: id } });
+            const user = await Users.findOne({ id: id });
 
             if (user === null) {
                 done("User not found", null);
@@ -36,7 +36,7 @@ export default function (db: Db): Router {
             }
             done(null, user)
         } catch {
-            done("User not found", null)
+            done("Fehler", null)
         }
 
     })
@@ -45,9 +45,7 @@ export default function (db: Db): Router {
     router.use(passport.session())
 
     passport.use(new LocalStrategy(async (username, password, done) => {
-        console.log(username, password);
         let user = await Users.findOne({ username: username }) as IUser | null;
-        console.log(user);
         if (user == null) {
             return done(null, false);
         }

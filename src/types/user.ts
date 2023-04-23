@@ -15,7 +15,7 @@ interface User {
     /**
      * The id of the User
      */
-    id: number;
+    id: string;
     /**
      * The username of the User used to log in
      */
@@ -67,6 +67,8 @@ interface Student extends User {
 
 interface Teacher extends User {
     type: "teacher";
+
+    managedGrade?: number;
 
     managedProject?: number;
 
