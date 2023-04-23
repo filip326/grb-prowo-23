@@ -1,10 +1,12 @@
-import { Router, request } from 'express';
+import { Router } from 'express';
 
 import { Db } from 'mongodb';
 
 import { hash } from 'bcrypt';
 
 import { Teacher, Student, User as IUser, AccountType, isTeacher } from './types/user';
+
+import PDFDocument from 'pdfkit';
 
 import id from './id';
 
@@ -149,7 +151,10 @@ export default function (db: Db): Router {
             
         }
 
-        // TODO: send response to client
+        const pdf = new PDFDocument();
+
+        pdf.registerFont('Ubuntu', './src/font/UbuntuMono-Regular.ttf');
+
 
 
     });
