@@ -43,7 +43,7 @@
             <label for="class_create_grade">Klassenstufe: </label>
             <input type="text" name="class_grade" id="class_create_grade" placeholder="5" required>
             <button type="submit">Klasse erstellen</button>
-        </form> 
+        </form>
         <div class="class-create" style="display: none;">
             Sie verwalten die Klasse <span id="class_name">5a</span>, Jahrgangsstufe <span id="class_grade">5</span>
         </div>
@@ -60,10 +60,36 @@
         <p>Hier steht der Inhalt des Abschnitts 2.</p>
     </section>
     <section id="projects">
-        <h2>Abschnitt 3</h2>
-        <p>Hier steht der Inhalt des Abschnitts 3.</p>
+        <h2>Projekte der ProWo-2023</h2>
+        <form action="/updateProjects" method="post">
+            <div class="projects-list">
+                <%- projects %>
+            </div>
+            <div>
+                <button onclick="newProjekt()">neues, leeres Projekt erstellen</button>
+            </div>
+            <button type="submit">Speichern</button>
+        </form>
     </section>
     <script>
+        // JS-Code um ein neues leeres Projekt zu erstellen
+        function newProjekt() {
+            document.querySelector('.projects-list').innerHTML += `
+            <div class="choice" id="newproject">
+                        <input type="text" placeholder="title" name="title" required>
+                        <textarea placeholder="description" name="description" required></textarea>
+                        <input type="text" placeholder="minGrade" name="minGrade">
+                        <input type="text" placeholder="maxGrade" name="maxGrade">
+                        <input type="text" placeholder="asignedTeacherUsername" name="asignedTeacher">
+                        <div class="button-wrapper">
+                            <button onclick="deleteProject('newproject')">Löschen</button>
+                        </div>
+                    </div>`;
+        }
+        function deleteProject(id) {
+            document.querySelector(`.projects-list #${id}`).remove();
+        }
+
         /* JavaScript-Code für das Umschalten zwischen Abschnitten */
         var navLinks = document.querySelectorAll('nav a');
         var sections = document.querySelectorAll('section');
