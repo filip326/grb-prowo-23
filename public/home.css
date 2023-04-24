@@ -54,6 +54,7 @@ main {
     color: black;
     border-radius: 10px;
     font-size: 24px;
+    background-color: white;
 }
 
 .navigation-button.small {
