@@ -89,7 +89,7 @@
                     </form>`;
         }
         function deleteProject(id) {
-            document.querySelector(`.projects-list #${id}`).remove();
+            window.location.href = `/delProject/${id}`;
         }
 
         /* JavaScript-Code für das Umschalten zwischen Abschnitten */
