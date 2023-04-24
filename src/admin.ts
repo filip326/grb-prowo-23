@@ -32,16 +32,17 @@ export function admin(db: Db): Router {
         res.render('admin', {
             projects: (await Projekte.find({}).toArray()).map(async (value) => {
                 let teacher = await Users.findOne({ id: "${value.teacherId}" })
-                return `<div class="choice" id="${value.id}">
+                return `<from method="post" action="/updateProject" class="choice" id="${value.id}">
                         <input type="text" placeholder="title" name="title" required value="${value.name}">
                         <textarea placeholder="description" name="description" required>${value.description}</textarea>
                         <input type="text" placeholder="minGrade" name="minGrade" value="${value.minimumGrade}">
                         <input type="text" placeholder="maxGrade" name="maxGrade" value="${value.maximumGrade}">
                         <input type="text" placeholder="asignedTeacherUsername" name="asignedTeacher" value="${teacher?.username ?? 'Error'}">
                         <div class="button-wrapper">
+                            <button type="submit">Speichern</button>
                             <button class="delete" onclick="deleteProject('${value.id}')">Löschen</button>
                         </div>
-                    </div>`;
+                    </from>`;
             }).join('\n') || "Zur Zeit sind keine Projekte eingetragen"
         });
 

@@ -67,7 +67,6 @@
                 <%- projects %>
             </div>
             <div class="button-wrapper">
-                <button type="submit">Speichern</button>
                 <button onclick="newProjekt()">neues, leeres Projekt erstellen</button>
             </div>
         </form>
@@ -76,16 +75,18 @@
         // JS-Code um ein neues leeres Projekt zu erstellen
         function newProjekt() {
             document.querySelector('.projects-list').innerHTML += `
-            <div class="choice" id="newproject">
+            <form class="choice" method="post" action="/newProject" id="newproject">
+                        <h4>Neues Projekt</h4>
                         <input type="text" placeholder="title" name="title" required>
                         <textarea placeholder="description" name="description" required></textarea>
                         <input type="text" placeholder="minGrade" name="minGrade">
                         <input type="text" placeholder="maxGrade" name="maxGrade">
                         <input type="text" placeholder="asignedTeacherUsername" name="asignedTeacher">
                         <div class="button-wrapper">
+                            <button type="submit">Speichern</button>
                             <button class="delete" onclick="deleteProject('newproject')">Löschen</button>
                         </div>
-                    </div>`;
+                    </form>`;
         }
         function deleteProject(id) {
             document.querySelector(`.projects-list #${id}`).remove();
