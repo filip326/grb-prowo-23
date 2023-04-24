@@ -6,19 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GRB - Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
     <link rel="icon" type="image/png" href="/img/logo.png">
 </head>
 
 <body>
     <header>
-        <img src="/img/logo.png" alt="Gymnasium Riedberg Logo">
+        <img src="/img/DolphinVote_light.png" alt="DolphinVote">
         <h1>Startseite</h1>
-        <a href="/logout"><img src="/img/logout.svg" alt="Logout Icon"> Log Out</a>
     </header>
 
     <main>
+        <a href="/logout" class="navigation-button small">
+            <img src="/img/logout.svg" alt="Logout Icon">
+            <div>
+                Log Out
+            </div>
+        </a>
         <%- linklist %>
+        <a href="/chpwd" class="navigation-button small">
+            <img src="/img/passwd.svg" alt="Password Icon">
+            <div>
+                Passwort ändern
+            </div>
+        </a>
     </main>
 </body>
 

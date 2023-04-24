@@ -8,28 +8,6 @@ export default (db: Db): Router => {
     const router: Router = Router();
     const Projekte = db.collection<Project>('projekte')
 
-    router.get('/projects/avaible', async (req, res) => {
-
-        // check if user is authenticated
-        if (!req.isAuthenticated()) {
-            return res.status(401).redirect('/login');
-        }
-
-        // check if user is student
-        if (!isStudent(req.user)) {
-            return res.status(403).send({ message: "Only students can access this route." });
-        }
-
-        // wrap projects, where minimum grade <= user's grade and maximum grade >= user's grade
-        const projects = await Projekte.find({
-            minimumGrade: { $lt: req.user.grade },
-            maximumGrade: { $gt: req.user.grade }
-        }).toArray()
-
-        // respond with projects
-        res.status(200).json(projects);
-    });
-
     // all projects
     router.get('/projects/all', async (req, res) => {
 
@@ -71,22 +49,26 @@ export default (db: Db): Router => {
                             <input type="radio" name="vote3" value="${value.id}">
                         </div>
                     </div>`
-                }).join('\n') || "- keine Wahlmöglichkeiten zur Zeit verfügbar -"
+                }).join('\n') || "Zur Zeit sind keine Projekte verfügbar"
             });
         } else {
             res.render('error', {
                 error: {
                     code: 403,
-                    title: "Diese Funktion ist nur SchülerInnen vorbehalten.",
-                    description: "Du hast auf diese Funktion keinen Zugriff."
+                    title: "Diese Funktion ist nur Schüler:innen vorbehalten.",
+                    description: "Sie haben auf diese Funktion keinen Zugriff."
                 },
                 redirect: {
                     link: "Startseite",
-                    url: "/"
+                    url: "/home"
                 }
             });
         }
     })
+
+    // router.post('/voting', async (req, res) => {
+
+    // })
 
     return router;
 };

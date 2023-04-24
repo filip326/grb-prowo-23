@@ -12,7 +12,8 @@ import session from 'express-session';
 import login from './login';
 import LogManager from './logger/logger';
 import wahltool from './wahltool';
-import { AccountTypes, isAdmin } from './types/user';
+import { isStudent, isTeacher } from './types/user';
+import { admin } from './admin';
 
 
 async function main() {
@@ -57,36 +58,29 @@ async function main() {
 
     app.use(login(db));
     app.use(wahltool(db));
+    app.use(admin(db));
 
     app.get('/home', (req, res) => {
         if (!req.isAuthenticated()) {
             return res.redirect('/login.html')
         }
 
-        if (isAdmin(req.user)) {
-            return res.render('home', {
-                linklist: `
-                // todo 
-                <a href="">Lehrkräfte hinzufügen</a>
-                `
-            });
+        let links: string[] = [];
+
+        if (req.user.admin || isTeacher(req.user)) {
+            links.push(`<a href="/admin" class="navigation-button">
+<img src="/img/DolphinAdmin_dark.png" alt="Dolphin Admin" /><div>DolphinAdmin</div></a>`);
         }
 
-        switch (req.user.type) {
-            case AccountTypes.STUDENT:
-                return res.render('home', {
-                    linklist: `<a href="/voting">Jetzt wählen!</a>`
-                });
-            case AccountTypes.TEACHER:
-                return res.render('home', {
-                    linklist: `
-                    // todo 
-                    <a href="/">Projekte eintragen/ ändern</a>
-                    // todo
-                    <a href="">Schüler hinzufügen/ bearbeiten</a>
-                    `
-                });
+        if (isStudent(req.user)) {
+            links.push(`<a href="/voting" class="navigation-button">
+    <img src="/img/DolphinVote_dark.png" alt="Dolphin Vote" /><div>DolphinVote</div></a>`);
         }
+
+        res.render('home', {
+            linklist: links.join('\n')
+        })
+
     });
 
     app.use(express.static('./public'));

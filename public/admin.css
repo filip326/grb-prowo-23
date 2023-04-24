@@ -1,0 +1,67 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+/* CSS-Regeln für die Navigationsleiste */
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 0;
+    max-height: 100px;
+    color: white;
+}
+
+nav img {
+    max-height: 100px;
+}
+
+nav h1 {
+    margin-right: auto;
+    margin-bottom: 5px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 18px;
+
+    height: 100%;
+
+}
+
+nav a.active {
+    border-bottom-color: white;
+}
+
+/* CSS-Regeln für die Abschnitte */
+section {
+    height: 400px;
+    display: none;
+    padding: 20px;
+}
+
+section.active {
+    display: block;
+}
+
+.class-create-form {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.class-create * {
+    font-size: 20px;
+}

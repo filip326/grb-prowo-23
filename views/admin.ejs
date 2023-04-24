@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DolphinAdmin</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="/admin.js"></script>
+</head>
+
+<body>
+    <nav>
+        <img src="/img/DolphinAdmin_light.png" alt="Dolphin Admin">
+        <h1>DolphinVote Admin</h1>
+        <a href="#start" class="active">Start</a>
+        <a href="#class">Meine Klasse</a>
+        <a href="#students">Schüler:innen</a>
+        <a href="#teacher">Lehrkräfte</a>
+        <a href="#projects">Projekte</a>
+    </nav>
+    <section id="start" class="active">
+        <h2>DolphinAdmin</h2>
+        <p>
+            Willkommen zu DolphinAdmin!<br />
+            In DophinAdmin können Sie DolphinVote perfekt verwalten. Tragen Sie Ihre Klasse unter <i>Meine Klasse</i>
+            ein. Unter <i>Schüler:innen</i> können Sie Accounts für Ihre
+            Schülerinnen und Schüler anlegen. Unter <i>Projekte</i> können Sie Ihr Projekt eintragen und so den
+            Schüler:innen
+            zur Wahl freigeben. Die Accounts für Lehrkräfte können Sie unter dem Punkt <i>Lehrkräfte</i> einsehen oder
+            verwalten.
+        </p>
+    </section>
+    <section id="class">
+        <h2>Meine Klasse</h2>
+        <p>
+            Sie können alle Schülerinnen und Schüler innerhalb ihrer Klasse verwalten. Legen Sie dafür eine Klasse an.
+            Falls Ihre Klasse bereits besteht, können Sie unter dem Reiter <i>Schüler:innen</i> Ihrer Klasse
+            Schülerinnen und Schüler hinzufügen.
+        </p>
+        <form method="post" action="/my-class" class="class-create" style="display: none;">
+            <label for="class_create_name">Klassenbezeichnung: </label>
+            <input type="text" name="class_name" id="class_create_name" placeholder="5a" required>
+            <label for="class_create_grade">Klassenstufe: </label>
+            <input type="text" name="class_grade" id="class_create_grade" placeholder="5" required>
+            <button type="submit">Klasse erstellen</button>
+        </form> 
+        <div class="class-create" style="display: none;">
+            Sie verwalten die Klasse <span id="class_name">5a</span>, Jahrgangsstufe <span id="class_grade">5</span>
+        </div>
+    </section>
+    <section id="students">
+        <h2>Schüler:innen</h2>
+        <p>
+            Hier können Sie Schülerinnen und Schüler erstellen und verwalten.
+        </p>
+        <input type="search" name="student_search" id="student_search" placeholder="Schüler:innen suchen" />
+    </section>
+    <section id="teacher">
+        <h2>Abschnitt 2</h2>
+        <p>Hier steht der Inhalt des Abschnitts 2.</p>
+    </section>
+    <section id="projects">
+        <h2>Abschnitt 3</h2>
+        <p>Hier steht der Inhalt des Abschnitts 3.</p>
+    </section>
+    <script>
+        /* JavaScript-Code für das Umschalten zwischen Abschnitten */
+        var navLinks = document.querySelectorAll('nav a');
+        var sections = document.querySelectorAll('section');
+
+        navLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                var targetId = this.getAttribute('href');
+                var targetSection = document.querySelector(targetId);
+
+                sections.forEach(function (section) {
+                    section.classList.remove('active');
+                });
+
+                navLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
