@@ -1,14 +1,25 @@
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .choice {
-    background-color: black;
+    background-color: #06264d;
     min-height: 100px;
     margin: 10px;
-    width: fit-content;
-    min-width: 40%;
+    min-width: 300px;
+    max-width: 300px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
-    display: inline-block;
+    display: inline-flex;
+    gap: 5px;
+}
+
+textarea {
+    resize: vertical;
 }
 
 .choice .title {
@@ -51,8 +62,27 @@ button:hover {
     background-color: rgb(0, 132, 255);    
 }
 
+button[type="submit"] {
+    background-color: #008000;
+}
+
+button[type="submit"]:hover {
+    background-color: #009800;
+}
+
+button.delete {
+    background-color: #981c01;
+}
+
+button.delete:hover {
+    background-color: #c62400;
+}
+
 .button-wrapper {
     display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
     padding: 10px;
     margin: 20px;
 }

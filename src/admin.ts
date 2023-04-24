@@ -39,7 +39,7 @@ export function admin(db: Db): Router {
                         <input type="text" placeholder="maxGrade" name="maxGrade" value="${value.maximumGrade}">
                         <input type="text" placeholder="asignedTeacherUsername" name="asignedTeacher" value="${teacher?.username ?? 'Error'}">
                         <div class="button-wrapper">
-                            <button onclick="deleteProject('${value.id}')">Löschen</button>
+                            <button class="delete" onclick="deleteProject('${value.id}')">Löschen</button>
                         </div>
                     </div>`;
             }).join('\n') || "Zur Zeit sind keine Projekte eingetragen"

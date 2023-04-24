@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DolphinAdmin</title>
+    <link rel="stylesheet" href="wahltool.css">
     <link rel="stylesheet" href="admin.css">
     <script src="/admin.js"></script>
 </head>
@@ -65,10 +66,10 @@
             <div class="projects-list">
                 <%- projects %>
             </div>
-            <div>
+            <div class="button-wrapper">
+                <button type="submit">Speichern</button>
                 <button onclick="newProjekt()">neues, leeres Projekt erstellen</button>
             </div>
-            <button type="submit">Speichern</button>
         </form>
     </section>
     <script>
@@ -82,7 +83,7 @@
                         <input type="text" placeholder="maxGrade" name="maxGrade">
                         <input type="text" placeholder="asignedTeacherUsername" name="asignedTeacher">
                         <div class="button-wrapper">
-                            <button onclick="deleteProject('newproject')">Löschen</button>
+                            <button class="delete" onclick="deleteProject('newproject')">Löschen</button>
                         </div>
                     </div>`;
         }
