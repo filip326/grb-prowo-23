@@ -165,7 +165,7 @@ export default function (db: Db): Router {
 
             if ((await Users.updateOne(
                 { username: req.body.username },
-                { $set: { password: await hash(req.body.newPassword, 20), changePasswordRequired: false } })).acknowledged) {
+                { $set: { password: await hash(req.body.newPassword, 12), changePasswordRequired: false } })).acknowledged) {
                 res.status(200).render('error', {
                     error: {
                         code: 200,
