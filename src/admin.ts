@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { Db } from 'mongodb';
 import { isTeacher, Student, Teacher, User as IUser } from './types/user';
 import { Project } from './types/project';
+import id from './id';
 
 export function admin(db: Db): Router {
     const router = Router();
@@ -139,6 +140,123 @@ export function admin(db: Db): Router {
         });
 
     })
+
+    router.get('/create-project', async (req, res) => {
+        if (!req.isAuthenticated()) {
+            res.status(403).send("Forbidden");
+            return;
+        }
+
+        if (!isTeacher(req.user) && !req.user.admin) {
+            res.status(403).send("Forbidden");
+        }
+
+        if (isTeacher(req.user) && req.user.managedProject != undefined) {
+            res.status(400).render('error', {
+                error: {
+                    code: 400,
+                    title: 'Bad Request',
+                    description: 'Sie verwalten bereits ein Projekt.'
+                },
+                redirect: {
+                    link: '/admin',
+                    name: 'Admin-Seite'
+                }
+            })
+        }
+
+        res.render('project-create')
+
+    })
+
+    router.get('/create-project', async (req, res) => {
+        if (!req.isAuthenticated()) {
+            res.status(403).send("Forbidden");
+            return;
+        }
+        if (!isTeacher(req.user) || req.user.managedProject != undefined) {
+            res.status(400).render('error', {
+                error: {
+                    code: 400,
+                    title: 'Bad Request',
+                    description: 'Sie verwalten bereits ein Projekt.'
+                },
+                redirect: {
+                    link: '/admin',
+                    name: 'Admin-Seite'
+                }
+            });
+        }
+
+        const projectId = id();
+        const projectName: string | undefined = req.body.title;
+        const projectDescription: string | undefined = req.body.description;
+        const projectCapacity: number | undefined = parseInt(req.body.capacity ?? 'NaN');
+        const projectMinGrade: number | undefined = parseInt(req.body.minGrade ?? 'NaN');
+        const projectMaxGrade: number | undefined = parseInt(req.body.maxGrade ?? 'NaN');
+        const projectCost: number | undefined = parseFloat(req.body.cost ?? 'NaN');
+
+        if (!projectName || !projectDescription || !projectCapacity || isNaN(projectCapacity) || isNaN(projectMinGrade) || isNaN(projectMaxGrade)) {
+            res.status(400).render('error', {
+                error: {
+                    code: 400,
+                    title: 'Bad Request',
+                    description: 'Bitte geben Sie die Daten vollständig ein.'
+                },
+                redirect: {
+                    link: '/admin',
+                    name: 'Admin-Seite'
+                }
+            })
+            return;
+        }
+        if (projectCost && isNaN(projectCost)) {
+            res.status(400).render('error', {
+                error: {
+                    code: 400,
+                    title: 'Bad Request',
+                    description: 'Kosten sind keine Zahl.'
+                },
+                redirect: {
+                    link: '/admin',
+                    name: 'Admin-Seite'
+                }
+            })
+            return;
+        }
+
+        try {
+            const createdProject = await Projekte.insertOne({
+                id: projectId,
+                teacherId: req.user.id,
+                name: projectName,
+                description: projectDescription,
+                capacity: projectCapacity,
+                minimumGrade: projectMinGrade,
+                maximumGrade: projectMaxGrade,
+                cost: projectCost,
+            })
+
+            if (createdProject.acknowledged) {
+                res.status(200).redirect('/admin');
+                return;
+            } else throw new Error();
+        } catch (e) {
+            res.status(500).render('error', {
+                error: {
+                    code: 500,
+                    title: 'Internal Server Error',
+                    description: 'Es ist ein interner Fehler in der Datenbank aufgetreten.'
+                },
+                redirect: {
+                    link: '/admin',
+                    name: 'Admin-Seite'
+                }
+            })
+            return;
+        }
+
+    });
 
     return router;
 }

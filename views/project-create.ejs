@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="resource-create-form.css">
+    <title>Projekt erstellen</title>
+</head>
+
+<body>
+    <form method="post" action="/create-project">
+        <h1>Projekt erstellen</h1>
+        <p>
+            Tragen Sie hier ihr Projekt ein. Sobald Sie es eingestellt haben, wird es den Schüler:innen zur Verfügung
+            gestellt.
+        </p>
+        <div class="input-box">
+            <label for="title">Projektbezeichnung</label>
+            <input type="text" name="title" id="title" placeholder=" " required>
+        </div>
+        <div class="input-box">
+            <label for="description">Beschreibung</label>
+            <textarea name="description" id="description" placeholder=" " required></textarea>
+        </div>
+        <div class="input-box">
+            <label for="capacity">maximale Kapazität</label>
+            <input type="number" name="capacity" id="capacity" placeholder=" " min="5" step="1" required>
+        </div>
+        <div class="input-box">
+            <label for="cost">evtl. Preis in Euro</label>
+            <input type="number" name="cost" id="cost" placeholder=" " min="0" step="0.1" max="100">
+        </div>
+        <div class="input-box">
+            <label for="minGrade">minimale Klassenstufe (inklusive)</label>
+            <input type="number" name="minGrade" id="minGrade" placeholder=" " min="5" step="1" max="13" required>
+        </div>
+        <div class="input-box">
+            <label for="maxGrade">maximale Klassenstufe (inklusive)</label>
+            <input type="number" name="maxGrade" id="maxGrade" placeholder=" " min="5" step="1" max="13" required>
+        </div>
+        <p><b>WICHTIG</b> Prüfen Sie die angegebenen Daten sorgfältig, bevor Sie diese absenden.</p>
+        <button type="submit">Erstellen</button>
+    </form>
+</body>
+
+</html>

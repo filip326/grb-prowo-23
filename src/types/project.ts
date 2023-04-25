@@ -1,9 +1,10 @@
 interface Project {
-    id: number;
+    id: string;
     name: string;
     description: string;
-    teacherId: number;
+    teacherId: string;
     capacity: number;
+    cost: number;
     minimumGrade: number;
     maximumGrade: number;
 }
